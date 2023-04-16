@@ -1,0 +1,51 @@
+#include<stdio.h><br>
+    int main(){<br>
+        printf("Enter the number of processes\n");<br>
+        int n;<br>
+        scanf("%d",&n);<br>
+        int Arrival_time[n];<br>
+        int Burst_time[n];<br>
+        int Completion_time[n];<br>
+        int TAT[n];<br>
+        int WT[n];<br>
+        for(int i=0;i<n;i++){<br>
+            printf("Enter the arrival time of %d process\n",i+1);<br>
+            scanf("%d",&Arrival_time[i]);<br>
+        }<br>
+        for(int i=0;i<n;i++){<br>
+            printf("Enter the Burst time of %d process\n",i+1);<br>
+            scanf("%d",&Burst_time[i]);<br>
+        }<br>
+        Completion_time[0]=Burst_time[0];<br>
+        for(int i=1;i<n;i++){<br>
+            // printf("Hello World");<br>
+            if(Arrival_time[i]<=Completion_time[i-1]){<br>
+                Completion_time[i]=Completion_time[i-1]+Burst_time[i];<br>
+            }<br>
+            else{<br>
+                Completion_time[i]=Arrival_time[i]+Burst_time[i];<br>
+            }<br>
+        }<br>
+        for(int i=0;i<n;i++){<br>
+            // printf("Hello World");<br>
+            TAT[i]=Completion_time[i]-Arrival_time[i];<br>
+        }<br>
+        for(int i=0;i<n;i++){<br>
+            // printf("Hello World");<br>
+            WT[i]=TAT[i]-Burst_time[i];<br>
+        }<br>
+        char l[1]="P";<br>
+        printf("This is the outcome :\n");<br>
+        char a[20]="Process NO:";<br>
+        char b[20]="Arrival time";<br>
+        char c[20]="Burst time";<br>
+        char d[20]="Completion time";<br>
+        char e[20]="Turn around time";<br>
+        char f[20]="Waiting time";<br>
+        printf("%-20s  %-20s  %-20s  %-20s  %-20s  %-20s\n",a,b,c,d,e,f);<br>
+        for(int i=0;i<n;i++){<br>
+            printf("%s%-19d  %-20d  %-20d  %-20d  %-20d  %-20d\n",l,i+1,Arrival_time[i],Burst_time[i],Completion_time[i],TAT[i],WT[i]);<br>
+        }<br>
+    <br>
+        return 0;<br>
+    }<br>
