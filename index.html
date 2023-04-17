@@ -290,4 +290,147 @@
     tatavg = tatavg + tat[i];<br>
     }<br>
     printf("\nPROCESS\t\tPRIORITY\tBURST TIME\tWAITING TIME\tTURNAROUND TIME");<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    #include<stdio.h><br>
+#include<stdlib.h><br>
+void main()<br>
+{<br>
+int buffer[10], bufsize, in, out, produce, consume,<br>
+choice=0; in = 0;<br>
+out = 0;<br>
+bufsize = 10;<br>
+while(choice !=3)<br>
+{<br>
+printf("\n1. Produce \t 2. Consume \t3. Exit");<br>
+printf("\nEnter your choice: ");<br>
+scanf("%d",&choice);<br>
+switch(choice) {<br>
+case 1: if((in+1)%bufsize==out)<br>
+printf("\nBuffer is Full");<br>
+else<br>
+{<br>
+printf("\nEnter the value: ");<br>
+scanf("%d", &produce);<br>
+buffer[in] = produce;<br>
+in = (in+1)%bufsize;<br>
+}<br>
+break;<br>
+case 2: if(in == out)<br>
+printf("\nBuffer is Empty");<br>
+else<br>
+{<br>
+consume = buffer[out];<br>
+printf("\nThe consumed value is %d", consume);<br>
+out = (out+1)%bufsize;<br>
+}<br>
+break;<br>
+} } }<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+#include <stdio.h><br>
+#include <stdio.h><br>
+#include <stdlib.h><br>
+int tph, philname[20], status[20], howhung, hu[20], cho;<br>
+<br>
+int one()<br>
+{<br>
+    int pos = 0, x, i;<br>
+    printf("\nAllow one philosopher to eat at any time\n");<br>
+    for (i = 0; i < howhung; i++, pos++)<br>
+    {<br>
+        printf("\nP %d is granted to eat", philname[hu[pos]]);<br>
+        for (x = pos; x < howhung; x++)<br>
+            printf("\nP %d is waiting", philname[hu[x]]);<br>
+    }<br>
+}<br>
+<br>
+int two()<br>
+{<br>
+    int i, j, s = 0, t, r, x;<br>
+    printf("\n Allow two philosophers to eat at sametime\n");<br>
+    for (i = 0; i < howhung; i++)<br>
+    {<br>
+        for (j = i + 1; j < howhung; j++)<br>
+        {<br>
+            if (abs(hu[i] - hu[j]) >= 1 && abs(hu[i] - hu[j]) != 4)<br>
+            {<br>
+                printf("\n\ncombination %d \n", (s + 1));<br>
+                t = hu[i];<br>
+                r = hu[j];<br>
+                s++;<br>
+                printf("\nP %d and P %d are granted to eat", philname[hu[i]],<br>
+                       philname[hu[j]]);<br>
+                for (x = 0; x < howhung; x++)<br>
+                {<br>
+                    if ((hu[x] != t) && (hu[x] != r))<br>
+                        printf("\nP %d is waiting", philname[hu[x]]);<br>
+                }<br>
+            }<br>
+        }<br>
+    }<br>
+}<br>
+<br>
+<br>
+int main()<br>
+{<br>
+    int i;<br>
+    printf("\n\nDINING PHILOSOPHER PROBLEM");<br>
+    printf("\nEnter the total no. of philosophers: ");<br>
+    scanf("%d", &tph);<br>
+    for (i = 0; i < tph; i++)<br>
+    {<br>
+        philname[i] = (i + 1);<br>
+        status[i] = 1;<br>
+    }<br>
+    printf("How many are hungry : ");<br>
+    scanf("%d", &howhung);<br>
+    if (howhung == tph)<br>
+    {<br>
+        printf("\n All are hungry..\nDead lock stage will occur");<br>
+        printf("\nExiting\n");<br>
+    }<br>
+    else<br>
+    {<br>
+        for (i = 0; i < howhung; i++)<br>
+        {<br>
+            printf("Enterphilosopher%dposition:", (i + 1));<br>
+            scanf("%d", &hu[i]);<br>
+            status[hu[i]] = 2;<br>
+        }<br>
+        do<br>
+        {<br>
+            printf("1.One can eat at a time\t2.Two can eat at a time\t3.Exit\nEnter your choice:");<br>
+            scanf("%d", &cho);<br>
+            switch (cho)<br>
+            {<br>
+            case 1:<br>
+                one();<br>
+                break;<br>
+            case 2:<br>
+                two();<br>
+                break;<br>
+            case 3:<br>
+                exit(0);<br>
+            default:<br>
+                printf("\nInvalid option..");<br>
+            }<br>
+        } while (1);<br>
+    }<br>
+}<br>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
     
