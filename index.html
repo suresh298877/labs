@@ -1,436 +1,95 @@
-#include<stdio.h><br>
-    #include<unistd.h><br>
-    #include<stdlib.h><br>
-    <br>
-    void main(int argc,char*arg[]){<br>
-        int pid;<br>
-        pid=fork();<br>
-        if(pid<0){<br>
-            printf("fork faiiled");<br>
-        }<br>
-        else if(pid==0){<br>
-            execlp("whoami","is",NULL);<br>
-            exit(0);<br>
-        }<br>
-        else{<br>
-            printf("\n Process id is - %d\n",getpid());<br>
-            exit(0);<br>
-        }<br>
-    }<br>
 <br>
-<br>
-<br>
-<br>
-
-#include<stdio.h>
-    #include<unistd.h>
-    #include<string.h>
-    #include<fcntl.h>
-    int main()
-    {
-        int fd[2];
-        char buf1[25] = "just a test\n";
-        char buf2[50];
-        fd[0]= open("file1",O_RDWR);
-        fd[1] = open("file2",O_RDWR);
-        write(fd[0],buf1,strlen(buf1));
-        printf("\n Enter the text now...");
-        scanf("\n %s",buf1);
-        printf("Cat file1 just a \n hai");
-        printf("\n%s",buf1);
-        printf("\n Cat file1 is \n hai");
-        write(fd[0],buf1,strlen(buf1));
-        lseek(fd[0],SEEK_SET , 0);
-        read(fd[0],buf2,sizeof(buf1));
-        write(fd[1],buf2,sizeof(buf2));
-        close(fd[0]);
-        close(fd[1]);
-        printf("\n");
-        return 0;
-    }
-<br>
-<br>
-<br>
-<br>
-#include<stdio.h><br>
-    int main(){<br>
-        printf("Enter the number of processes\n");<br>
-        int n;<br>
-        scanf("%d",&n);<br>
-        int Arrival_time[n];<br>
-        int Burst_time[n];<br>
-        int Completion_time[n];<br>
-        int TAT[n];<br>
-        int WT[n];<br>
-        for(int i=0;i<n;i++){<br>
-            printf("Enter the arrival time of %d process\n",i+1);<br>
-            scanf("%d",&Arrival_time[i]);<br>
-        }<br>
-        for(int i=0;i<n;i++){<br>
-            printf("Enter the Burst time of %d process\n",i+1);<br>
-            scanf("%d",&Burst_time[i]);<br>
-        }<br>
-        Completion_time[0]=Burst_time[0];<br>
-        for(int i=1;i<n;i++){<br>
-            // printf("Hello World");<br>
-            if(Arrival_time[i]<=Completion_time[i-1]){<br>
-                Completion_time[i]=Completion_time[i-1]+Burst_time[i];<br>
-            }<br>
-            else{<br>
-                Completion_time[i]=Arrival_time[i]+Burst_time[i];<br>
-            }<br>
-        }<br>
-        for(int i=0;i<n;i++){<br>
-            // printf("Hello World");<br>
-            TAT[i]=Completion_time[i]-Arrival_time[i];<br>
-        }<br>
-        for(int i=0;i<n;i++){<br>
-            // printf("Hello World");<br>
-            WT[i]=TAT[i]-Burst_time[i];<br>
-        }<br>
-        char l[1]="P";<br>
-        printf("This is the outcome :\n");<br>
-        char a[20]="Process NO:";<br>
-        char b[20]="Arrival time";<br>
-        char c[20]="Burst time";<br>
-        char d[20]="Completion time";<br>
-        char e[20]="Turn around time";<br>
-        char f[20]="Waiting time";<br>
-        printf("%-20s  %-20s  %-20s  %-20s  %-20s  %-20s\n",a,b,c,d,e,f);<br>
-        for(int i=0;i<n;i++){<br>
-            printf("%s%-19d  %-20d  %-20d  %-20d  %-20d  %-20d\n",l,i+1,Arrival_time[i],Burst_time[i],Completion_time[i],TAT[i],WT[i]);<br>
-        }<br>
-    <br>
-        return 0;<br>
-    }<br>
-<br>
-<br>
-<br>
-<br>
-<br>    
-#include<stdio.h><br>
-    int main(){<br>
-        printf("Enter the number of processes\n");<br>
-    <br>
-        int n;<br>
-        scanf("%d",&n);<br>
-        int Arrival_time[n];<br>
-        int Burst_time[n];<br>
-        int Completion_time[n];<br>
-        int TAT[n];<br>
-        int WT[n];<br>
-        for(int i=0;i<n;i++){<br>
-            printf("Enter the arrival time of %d process\n",i+1);<br>
-            scanf("%d",&Arrival_time[i]);<br>
-        }<br>
-        for(int i=0;i<n;i++){<br>
-            printf("Enter the Burst time of %d process\n",i+1);<br>
-            scanf("%d",&Burst_time[i]);<br>
-        }<br>
-        for(int i=0;i<n;i++){<br>
-            for(int j=i+1;j<n;j++){<br>
-                if(Burst_time[i]>Burst_time[j]){<br>
-                    int temp=Burst_time[i];<br>
-                    Burst_time[i]=Burst_time[j];<br>
-                    Burst_time[j]=temp;<br>
-    <br>
-                    int temp2=Arrival_time[i];<br>
-                    Arrival_time[i]=Arrival_time[j];<br>
-                    Arrival_time[j]=temp2;<br>
-                }<br>
-                if(Burst_time[i]==Burst_time[j])<br>
-                {<br>
-                    if(Arrival_time[i]>Arrival_time[j]){<br>
-                        int temp=Arrival_time[i];<br>
-                        Arrival_time[i]=Arrival_time[j];<br>
-                        Arrival_time[j]=temp;<br>
-    <br>
-                        int temp2=Burst_time[i];<br>
-                        Burst_time[i]=Burst_time[j];<br>
-                        Burst_time[j]=temp2;<br>
-                    }<br>
-                }<br>
-            }<br>
-        }<br>
-    <br>
-        Completion_time[0]=Arrival_time[0]+Burst_time[0];<br>
-        for(int i=1;i<n;i++){<br>
-            Completion_time[i]=Burst_time[i]+Completion_time[i-1];<br>
-        }<br>
-    <br>
-        for(int i=0;i<n;i++){<br>
-            TAT[i]=Completion_time[i]-Arrival_time[i];<br>
-        }<br>
-    <br>
-        for(int i=0;i<n;i++){<br>
-            WT[i]=TAT[i]-Burst_time[i];<br>
-        }<br>
-        char l[1]="P";<br>
-        printf("This is the outcome :\n");<br>
-        char a[20]="Process NO:";<br>
-        char b[20]="Arrival time";<br>
-        char c[20]="Burst time";<br>
-        char d[20]="Completion time";<br>
-        char e[20]="Turn around time";<br>
-        char f[20]="Waiting time";<br>
-        printf("%-20s  %-20s  %-20s  %-20s  %-20s  %-20s\n",a,b,c,d,e,f);<br>
-        for(int i=0;i<n;i++){<br>
-            printf("%s%-19d  %-20d  %-20d  %-20d  %-20d  %-20d\n",l,i+1,Arrival_time[i],Burst_time[i],Completion_time[i],TAT[i],WT[i]);<br>
-        }<br>
-    <br>
-        return 0;<br>
-    }<br>
-<br>
-<br>
-<br>
-<br>
-#include <stdio.h><br>
-    #include <conio.h><br>
-    <br>
-    void main()<br>
-    {<br>
-        // initlialize the variable name<br>
-        int i, NOP, sum = 0, count = 0, y, quant, wt = 0, tat = 0, at[10], bt[10], temp[10];<br>
-        float avg_wt, avg_tat;<br>
-        printf(" Total number of process in the system: ");<br>
-        scanf("%d", &NOP);<br>
-        y = NOP; // Assign the number of process to variable y<br>
-    <br>
-        // Use for loop to enter the details of the process like Arrival time and the Burst Time<br>
-        for (i = 0; i < NOP; i++)<br>
-        {<br>
-            printf("\n Enter the Arrival and Burst time of the Process[%d]\n", i + 1);<br>
-            printf(" Arrival time is: \t"); // Accept arrival time<br>
-            scanf("%d", &at[i]);<br>
-            printf(" \nBurst time is: \t"); // Accept the Burst time<br>
-            scanf("%d", &bt[i]);<br>
-            temp[i] = bt[i]; // store the burst time in temp array<br>
-        }<br>
-        // Accept the Time qunat<br>
-        printf("Enter the Time Quantum for the process: \t");<br>
-        scanf("%d", &quant);<br>
-        // Display the process No, burst time, Turn Around Time and the waiting time<br>
-        printf("\n Process No \t\t Burst Time \t\t TAT \t\t Waiting Time ");<br>
-        for (sum = 0, i = 0; y != 0;)<br>
-        {<br>
-            if (temp[i] <= quant && temp[i] > 0) // define the conditions<br>
-            {<br>
-                sum = sum + temp[i];<br>
-                temp[i] = 0;<br>
-                count = 1;<br>
-            }<br>
-            else if (temp[i] > 0)<br>
-            {<br>
-                temp[i] = temp[i] - quant;<br>
-                sum = sum + quant;<br>
-            }<br>
-            if (temp[i] == 0 && count == 1)<br>
-            {<br>
-                y--; // decrement the process no.<br>
-                printf("\nProcess No[%d] \t\t %d\t\t\t\t %d\t\t\t %d", i + 1, bt[i], sum - at[i], sum - at[i] - bt[i]);<br>
-                wt = wt + sum - at[i] - bt[i];<br>
-                tat = tat + sum - at[i];<br>
-                count = 0;<br>
-            }<br>
-            if (i == NOP - 1)<br>
-            {<br>
-                i = 0;<br>
-            }<br>
-            else if (at[i + 1] <= sum)<br>
-            {<br>
-                i++;<br>
-            }<br>
-            else<br>
-            {<br>
-                i = 0;<br>
-            }<br>
-        }<br>
-        // represents the average waiting time and Turn Around time<br>
-        avg_wt = wt * 1.0 / NOP;<br>
-        avg_tat = tat * 1.0 / NOP;<br>
-        printf("\n Average Turn Around Time: \t%f", avg_wt);<br>
-        printf("\n Average Waiting Time: \t%f", avg_tat);<br>
-        getch();<br>
-    }<br>
-<br>
-<br>
-<br>
-<br>
-#include<stdio.h> <br>
-    int main()<br>
-    {<br>
-    int p[20],bt[20],pri[20], wt[20],tat[20],i, k, n, temp; <br>
-    float wtavg, tatavg;<br>
-    printf("Enter the number of processes --- "); <br>
-    scanf("%d",&n);<br>
-    for(i=0;i<n;i++){ p[i] = i;<br>
-    printf("Enter the Burst Time & Priority of Process %d --- ",i); <br>
-    scanf("%d%d",&bt[i], &pri[i]);<br>
-    }<br>
-    for(i=0;i<n;i++) <br>
-    for(k=i+1;k<n;k++) <br>
-    if(pri[i] > pri[k])<br>
-    { temp=p[i]; <br>
-    p[i]=p[k]; <br>
-    p[k]=temp; <br>
-    temp=bt[i]; <br>
-    bt[i]=bt[k]; <br>
-    bt[k]=temp; <br>
-    temp=pri[i]; <br>
-    pri[i]=pri[k]; <br>
-    pri[k]=temp;<br>
-    }<br>
-    wtavg = wt[0] = 0; <br>
-    tatavg = tat[0] = bt[0]; <br>
-    for(i=1;i<n;i++)<br>
-    {<br>
-    wt[i] = wt[i-1] + bt[i-1];<br>
-    tat[i] = tat[i-1] + bt[i];<br>
-    wtavg = wtavg + wt[i]; <br>
-    tatavg = tatavg + tat[i];<br>
-    }<br>
-    printf("\nPROCESS\t\tPRIORITY\tBURST TIME\tWAITING TIME\tTURNAROUND TIME");<br>
-    <br>
-    <br>
-    <br>
-    <br>
-    #include<stdio.h><br>
-#include<stdlib.h><br>
-void main()<br>
-{<br>
-int buffer[10], bufsize, in, out, produce, consume,<br>
-choice=0; in = 0;<br>
-out = 0;<br>
-bufsize = 10;<br>
-while(choice !=3)<br>
-{<br>
-printf("\n1. Produce \t 2. Consume \t3. Exit");<br>
-printf("\nEnter your choice: ");<br>
-scanf("%d",&choice);<br>
-switch(choice) {<br>
-case 1: if((in+1)%bufsize==out)<br>
-printf("\nBuffer is Full");<br>
-else<br>
-{<br>
-printf("\nEnter the value: ");<br>
-scanf("%d", &produce);<br>
-buffer[in] = produce;<br>
-in = (in+1)%bufsize;<br>
-}<br>
-break;<br>
-case 2: if(in == out)<br>
-printf("\nBuffer is Empty");<br>
-else<br>
-{<br>
-consume = buffer[out];<br>
-printf("\nThe consumed value is %d", consume);<br>
-out = (out+1)%bufsize;<br>
-}<br>
-break;<br>
-} } }<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-#include <stdio.h><br>
-#include <stdio.h><br>
-#include <stdlib.h><br>
-int tph, philname[20], status[20], howhung, hu[20], cho;<br>
-<br>
-int one()<br>
-{<br>
-    int pos = 0, x, i;<br>
-    printf("\nAllow one philosopher to eat at any time\n");<br>
-    for (i = 0; i < howhung; i++, pos++)<br>
-    {<br>
-        printf("\nP %d is granted to eat", philname[hu[pos]]);<br>
-        for (x = pos; x < howhung; x++)<br>
-            printf("\nP %d is waiting", philname[hu[x]]);<br>
-    }<br>
+knowledge_table={<br>
+    ('dirty','A'):'Suck',<br>
+    ('dirty','B'):'Suck',<br>
+    ("dirty",'C'):'Suck',<br>
+    ('clean','A'):'right',<br>
+    ('clean','B'):'down',<br>
+    ('clean','C'):'left'<br>
 }<br>
 <br>
-int two()<br>
-{<br>
-    int i, j, s = 0, t, r, x;<br>
-    printf("\n Allow two philosophers to eat at sametime\n");<br>
-    for (i = 0; i < howhung; i++)<br>
-    {<br>
-        for (j = i + 1; j < howhung; j++)<br>
-        {<br>
-            if (abs(hu[i] - hu[j]) >= 1 && abs(hu[i] - hu[j]) != 4)<br>
-            {<br>
-                printf("\n\ncombination %d \n", (s + 1));<br>
-                t = hu[i];<br>
-                r = hu[j];<br>
-                s++;<br>
-                printf("\nP %d and P %d are granted to eat", philname[hu[i]],<br>
-                       philname[hu[j]]);<br>
-                for (x = 0; x < howhung; x++)<br>
-                {<br>
-                    if ((hu[x] != t) && (hu[x] != r))<br>
-                        printf("\nP %d is waiting", philname[hu[x]]);<br>
-                }<br>
-            }<br>
-        }<br>
-    }<br>
+def agent(location,state):<br>
+    action=knowledge_table.get((state,location),'invalid')<br>
+    if action=='suck':<br>
+        print('Agent cleaned',location)<br>
+    elif action=='right':<br>
+        print("Agent moved right from",location)<br>
+        location='B'<br>
+    elif action=='down':<br>
+        print("Agent moved down from",location)<br>
+        location='C'<br>
+    elif action=='left':<br>
+        print('Agent moved left from',location)<br>
+        location='B'<br>
+    else:<br>
+        print('Invalid state-action pair:',state,location)<br>
+    return location<br>
+<br>
+environment={<br>
+    'A':'dirty',<br>
+    'B':'dirty',<br>
+    'C':'dirty'<br>
 }<br>
 <br>
+def main():<br>
+    location='A'<br>
+    while True:<br>
+        state=environment[location]<br>
+        agent(location,state)<br>
+        environment[location]='clean'<br>
+        if all(value == 'clean' for value in environment.values()):<br>
+            print("Environment is clean!")<br>
+            break<br>
+        location=agent(location,state)<br>
+if __name__=='__main__':<br>
+    main()<br>
 <br>
-int main()<br>
-{<br>
-    int i;<br>
-    printf("\n\nDINING PHILOSOPHER PROBLEM");<br>
-    printf("\nEnter the total no. of philosophers: ");<br>
-    scanf("%d", &tph);<br>
-    for (i = 0; i < tph; i++)<br>
-    {<br>
-        philname[i] = (i + 1);<br>
-        status[i] = 1;<br>
-    }<br>
-    printf("How many are hungry : ");<br>
-    scanf("%d", &howhung);<br>
-    if (howhung == tph)<br>
-    {<br>
-        printf("\n All are hungry..\nDead lock stage will occur");<br>
-        printf("\nExiting\n");<br>
-    }<br>
-    else<br>
-    {<br>
-        for (i = 0; i < howhung; i++)<br>
-        {<br>
-            printf("Enterphilosopher%dposition:", (i + 1));<br>
-            scanf("%d", &hu[i]);<br>
-            status[hu[i]] = 2;<br>
-        }<br>
-        do<br>
-        {<br>
-            printf("1.One can eat at a time\t2.Two can eat at a time\t3.Exit\nEnter your choice:");<br>
-            scanf("%d", &cho);<br>
-            switch (cho)<br>
-            {<br>
-            case 1:<br>
-                one();<br>
-                break;<br>
-            case 2:<br>
-                two();<br>
-                break;<br>
-            case 3:<br>
-                exit(0);<br>
-            default:<br>
-                printf("\nInvalid option..");<br>
-            }<br>
-        } while (1);<br>
-    }<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+def reflex_agent(location,status):<br>
+    if status=='dirty':<br>
+        return 'suck'<br>
+    elif location=='A':<br>
+        return 'right'<br>
+    elif location=='B':<br>
+        return 'left'<br>
+<br>
+environment={<br>
+    'A':'dirty',<br>
+    'B':'dirty'<br>
 }<br>
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
+<br>
+def environment_step(agent_location):<br>
+    status=environment[agent_location]<br>
+    action=reflex_agent(agent_location,status)<br>
+    if action=='suck':<br>
+        print('Agent cleaned',agent_location)<br>
+        environment[agent_location]='clean'<br>
+    elif action=='right':<br>
+        print('Agent moved right from',agent_location)<br>
+        agent_location='B'<br>
+    elif action=='left':<br>
+        print('Agent moved left from',agent_location)<br>
+        agent_location='A'<br>
+    return agent_location<br>
+<br>
+def main():<br>
+    agent_location='A'<br>
+    while True:<br>
+        agent_location=environment_step(agent_location)<br>
+        if all(value=='clean' for value in environment.values()):<br>
+            print('Environment is clean')<br>
+            break<br>
+if __name__=='__main__':<br>
+    main()<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
